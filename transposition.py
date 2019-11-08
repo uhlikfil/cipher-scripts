@@ -30,7 +30,15 @@ def double_transpo(text):
             result.append((ct[0], ot[0], ot[1]))
     return result
 
-
 with open('results.txt', 'w') as output_file:
    for result in double_transpo(sys.argv[1]):
         output_file.write(f'{result[0]}\n{result[1]}\n{result[2]}\n')
+
+if (sys.argv[1] == '-s'):
+    with open('results.txt', 'w') as output_file:
+        for result in get_all_transpos(sys.argv[2]):
+            output_file.write(f'{result[0]}\n{result[1]}\n')
+else:
+    with open('results.txt', 'w') as output_file:
+        for result in double_transpo(sys.argv[1]):
+            output_file.write(f'{result[0]}\n{result[1]}\n{result[2]}\n')
