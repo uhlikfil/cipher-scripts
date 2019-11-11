@@ -1,4 +1,5 @@
 import sys
+import enchant
 
 def get_divisors(number):
     result = []
@@ -30,15 +31,28 @@ def double_transpo(text):
             result.append((ct[0], ot[0], ot[1]))
     return result
 
-with open('results.txt', 'w') as output_file:
-   for result in double_transpo(sys.argv[1]):
-        output_file.write(f'{result[0]}\n{result[1]}\n{result[2]}\n')
+
+def is_text_english(text):
+    d = enchant.Dict('en_US')
+    word_length = 5
+    check_coefficient = 30
+    counter = 0
+    text_length = len(text)
+    for i in range(text_length - word_length):
+        if d.check(text[i:i+word_length]):
+            counter += 1
+    return counter > text_length / check_coefficient
+
+
+
+out_name = 'results.txt'
 
 if (sys.argv[1] == '-s'):
-    with open('results.txt', 'w') as output_file:
+    with open(out_name, 'w') as output_file:
         for result in get_all_transpos(sys.argv[2]):
             output_file.write(f'{result[0]}\n{result[1]}\n')
-else:
-    with open('results.txt', 'w') as output_file:
-        for result in double_transpo(sys.argv[1]):
-            output_file.write(f'{result[0]}\n{result[1]}\n{result[2]}\n')
+elif (sys.argv[1] == '-d'):
+    with open(out_name, 'w') as output_file:
+        for result in double_transpo(sys.argv[2]):
+            if (is_text_english(result[2])):
+                output_file.write(f'{result[0]}\n{result[1]}\n{result[2]}\n')
