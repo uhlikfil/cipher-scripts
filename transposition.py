@@ -44,13 +44,13 @@ def is_text_english(text):
     return counter > text_length / check_coefficient
 
 
-
 out_name = 'results.txt'
 
 if (sys.argv[1] == '-s'):
     with open(out_name, 'w') as output_file:
         for result in get_all_transpos(sys.argv[2]):
-            output_file.write(f'{result[0]}\n{result[1]}\n')
+            if (is_text_english(result[1])):
+                output_file.write(f'{result[0]}\n{result[1]}\n')
 elif (sys.argv[1] == '-d'):
     with open(out_name, 'w') as output_file:
         for result in double_transpo(sys.argv[2]):
