@@ -46,13 +46,19 @@ def is_text_english(text):
 
 out_name = 'results.txt'
 
-if (sys.argv[1] == '-s'):
+if (sys.argv[2] == '-s'):
     with open(out_name, 'w') as output_file:
-        for result in get_all_transpos(sys.argv[2]):
-            if (is_text_english(result[1])):
+        for result in get_all_transpos(sys.argv[1]):
+            if (len(sys.argv) > 3 and sys.argv[3] == '-f'):
+                if is_text_english(result[1]):
+                    output_file.write(f'{result[0]}\n{result[1]}\n')
+            else:
                 output_file.write(f'{result[0]}\n{result[1]}\n')
-elif (sys.argv[1] == '-d'):
+elif (sys.argv[2] == '-d'):
     with open(out_name, 'w') as output_file:
-        for result in double_transpo(sys.argv[2]):
-            if (is_text_english(result[2])):
+        for result in double_transpo(sys.argv[1]):
+            if (len(sys.argv) > 3 and sys.argv[3] == '-f'):
+                if is_text_english(result[1]):
+                    output_file.write(f'{result[0]}\n{result[1]}\n{result[2]}\n')
+            else:
                 output_file.write(f'{result[0]}\n{result[1]}\n{result[2]}\n')
